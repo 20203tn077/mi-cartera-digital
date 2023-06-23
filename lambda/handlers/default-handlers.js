@@ -128,3 +128,14 @@ const ErrorHandler = {
             .getResponse();
     }
 };
+
+module.exports = {
+    LaunchRequestHandler,
+    HelloWorldIntentHandler,
+    HelpIntentHandler,
+    CancelAndStopIntentHandler,
+    FallbackIntentHandler,
+    SessionEndedRequestHandler,
+    IntentReflectorHandler,
+    ErrorHandler
+}
