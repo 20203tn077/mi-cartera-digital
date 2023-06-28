@@ -1,49 +1,52 @@
-const { result } = require('../utils/handler-utils.js')
-const { ExpenseCategoryService } = require('../services/expense-category-service.js')
+const Alexa = require('ask-sdk-core')
+const { result, slot } = require('../utils/handler-utils')
+const ExpenseCategoryService = require('../services/expense-category-service')
 
 const GetExpenseCategoriesIntentHandler = {
-    canHandle(handlerInput) {
-        return Alexa.getRequestType(handlerInput.requestEnvelope) === 'IntentRequest'
-            && Alexa.getIntentName(handlerInput.requestEnvelope) === 'GetExpenseCategoriesIntent'
-    },
-    handle(handlerInput) {
-        const speakOutput = 'Hello World!'
-
-        return handlerInput.responseBuilder
-            .speak(speakOutput)
-            //.reprompt('add a reprompt if you want to keep the session open for the user to respond')
-            .getResponse()
-    }
+  canHandle(handlerInput) {
+    return (
+      Alexa.getRequestType(handlerInput.requestEnvelope) === 'IntentRequest' &&
+      Alexa.getIntentName(handlerInput.requestEnvelope) === 'GetExpenseCategoriesIntent'
+    )
+  },
+  async handle(handlerInput) {
+    const expenseCategoryService = new ExpenseCategoryService(handlerInput)
+    const categories = await expenseCategoryService.getExpenseCategories()
+    const speakOutput = `Las categorías de gasto son: ${categories.join(', ')}`
+    return result(speakOutput)
+  },
 }
 
 const CreateExpenseCategoryIntentHandler = {
-    canHandle(handlerInput) {
-        return Alexa.getRequestType(handlerInput.requestEnvelope) === 'IntentRequest'
-            && Alexa.getIntentName(handlerInput.requestEnvelope) === 'CreateExpenseCategoryIntent'
-    },
-    handle(handlerInput) {
-        const speakOutput = 'Hello World!'
+  canHandle(handlerInput) {
+    return (
+      Alexa.getRequestType(handlerInput.requestEnvelope) === 'IntentRequest' &&
+      Alexa.getIntentName(handlerInput.requestEnvelope) === 'CreateExpenseCategoryIntent'
+    )
+  },
+  handle(handlerInput) {
+    const speakOutput = 'Hello World!'
 
-        return handlerInput.responseBuilder
-            .speak(speakOutput)
-            //.reprompt('add a reprompt if you want to keep the session open for the user to respond')
-            .getResponse()
-    }
+    return result('')
+  },
 }
 
 const DeleteExpenseCategoryIntentHandler = {
-    canHandle(handlerInput) {
-        return Alexa.getRequestType(handlerInput.requestEnvelope) === 'IntentRequest'
-            && Alexa.getIntentName(handlerInput.requestEnvelope) === 'DeleteExpenseCategoryIntent'
-    },
-    handle(handlerInput) {
-        const speakOutput = 'Hello World!'
+  canHandle(handlerInput) {
+    return (
+      Alexa.getRequestType(handlerInput.requestEnvelope) === 'IntentRequest' &&
+      Alexa.getIntentName(handlerInput.requestEnvelope) === 'DeleteExpenseCategoryIntent'
+    )
+  },
+  handle(handlerInput) {
+    const speakOutput = 'Hello World!'
 
-        return handlerInput.responseBuilder
-            .speak(speakOutput)
-            //.reprompt('add a reprompt if you want to keep the session open for the user to respond')
-            .getResponse()
-    }
+    return result('')
+  },
 }
 
-module.exports = {}
+module.exports = {
+  GetExpenseCategoriesIntentHandler,
+  CreateExpenseCategoryIntentHandler,
+  DeleteExpenseCategoryIntentHandler,
+}

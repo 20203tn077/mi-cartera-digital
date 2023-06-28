@@ -4,35 +4,36 @@ const Alexa = require('ask-sdk-core')
 const AWS = require('aws-sdk')
 const ddbAdapter = require('ask-sdk-dynamodb-persistence-adapter')
 
-// Default handlers
+// Support handlers
 const {
-    LaunchRequestHandler,
-    HelloWorldIntentHandler,
-    HelpIntentHandler,
-    CancelAndStopIntentHandler,
-    FallbackIntentHandler,
-    SessionEndedRequestHandler,
-    IntentReflectorHandler,
-    ErrorHandler
-} = require('./handlers/default-handlers')
+  LaunchRequestHandler,
+  HelpIntentHandler,
+  CancelAndStopIntentHandler,
+  FallbackIntentHandler,
+  SessionEndedRequestHandler,
+  IntentReflectorHandler,
+  ErrorHandler,
+} = require('./handlers/support-handlers')
 
+// Salary handlers
+const {
+  SetSalaryIntentHandler
+} = require('./handlers/salary-handlers')
 
 exports.handler = Alexa.SkillBuilders.custom()
   .addRequestHandlers(
     LaunchRequestHandler,
-    HelloWorldIntentHandler,
 
-    // Custom handlers
+    // Mi cartera digital handlers
+    SetSalaryIntentHandler,
 
     HelpIntentHandler,
     CancelAndStopIntentHandler,
     FallbackIntentHandler,
     SessionEndedRequestHandler,
-    IntentReflectorHandler,
+    IntentReflectorHandler
   )
-  .addErrorHandlers(
-    ErrorHandler
-  )
+  .addErrorHandlers(ErrorHandler)
   .withCustomUserAgent('sample/hello-world/v1.2')
   // DynamoDB
   .withPersistenceAdapter(
