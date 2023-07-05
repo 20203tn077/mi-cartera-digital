@@ -7,13 +7,12 @@ const SetSalaryIntentHandler = {
     return handleRequest(handlerInput, 'SetSalaryIntent')
   },
   async handle(handlerInput) {
-    if (!confirm(handlerInput)) return result('Operación cancelada')
+    if (!confirm(handlerInput)) return result(handlerInput, 'Operación cancelada')
 
-    const salaryService = new SalaryService(handlerInput)
+    // const salaryService = new SalaryService(handlerInput)
     const salary = slot(handlerInput, 'salary')
-
-    await salaryService.setSalary(salary)
-    return result(`Se configuró tu quincena con un monto de ${salary} pesos`)
+    // await salaryService.setSalary(salary)
+    return result(handlerInput, `Se configuró tu quincena con un monto de ${salary} pesos`)
   },
 }
 

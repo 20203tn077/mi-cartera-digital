@@ -1,47 +1,50 @@
 const Alexa = require('ask-sdk-core')
-const { result, slot } = require('../utils/handler-utils')
+const { result, slot, handleRequest } = require('../utils/handler-utils')
 const ExpenseCategoryService = require('../services/expense-category-service')
 
 const GetExpenseCategoriesIntentHandler = {
   canHandle(handlerInput) {
-    return (
-      Alexa.getRequestType(handlerInput.requestEnvelope) === 'IntentRequest' &&
-      Alexa.getIntentName(handlerInput.requestEnvelope) === 'GetExpenseCategoriesIntent'
-    )
+    console.log(1)
+    return handleRequest(handlerInput, 'GetExpenseCategoriesIntent')
   },
   async handle(handlerInput) {
+    console.log(2)
     const expenseCategoryService = new ExpenseCategoryService(handlerInput)
-    const categories = await expenseCategoryService.getExpenseCategories()
-    const speakOutput = `Las categorías de gasto son: ${categories.join(', ')}`
+    console.log(5)
+    const categories = await expenseCategoryService.getActive()
+    const speakOutput = `Las categorías de gasto son: ${categories.map(category => category.name).join(', ')}`
+
     return result(speakOutput)
   },
 }
 
 const CreateExpenseCategoryIntentHandler = {
   canHandle(handlerInput) {
-    return (
-      Alexa.getRequestType(handlerInput.requestEnvelope) === 'IntentRequest' &&
-      Alexa.getIntentName(handlerInput.requestEnvelope) === 'CreateExpenseCategoryIntent'
-    )
+    return handleRequest(handlerInput, 'CreateExpenseCategoryIntent')
   },
-  handle(handlerInput) {
-    const speakOutput = 'Hello World!'
+  async handle(handlerInput) {
+    const category = slot(handlerInput, 'category')
+    const expenseCategoryService = new ExpenseCategoryService(handlerInput)
 
-    return result('')
+    await expenseCategoryService.create(category)
+    const speakOutput = `Se creó la categoría ${category}`
+
+    return result(speakOutput)
   },
 }
 
 const DeleteExpenseCategoryIntentHandler = {
   canHandle(handlerInput) {
-    return (
-      Alexa.getRequestType(handlerInput.requestEnvelope) === 'IntentRequest' &&
-      Alexa.getIntentName(handlerInput.requestEnvelope) === 'DeleteExpenseCategoryIntent'
-    )
+    return handleRequest(handlerInput, 'DeleteExpenseCategoryIntent')
   },
-  handle(handlerInput) {
-    const speakOutput = 'Hello World!'
+  async handle(handlerInput) {
+    const category = slot(handlerInput, 'category')
+    const expenseCategoryService = new ExpenseCategoryService(handlerInput)
 
-    return result('')
+    await expenseCategoryService.delete(category)
+    const speakOutput = `Se desactivó la categoría ${category}`
+    
+    return result(speakOutput)
   },
 }
 

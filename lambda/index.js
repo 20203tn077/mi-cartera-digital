@@ -15,6 +15,13 @@ const {
   ErrorHandler,
 } = require('./handlers/support-handlers')
 
+// Expense category handlers
+const {
+  GetExpenseCategoriesIntentHandler,
+  CreateExpenseCategoryIntentHandler,
+  DeleteExpenseCategoryIntentHandler,
+} = require('./handlers/expense-category-handlers')
+
 // Salary handlers
 const {
   SetSalaryIntentHandler
@@ -25,6 +32,9 @@ exports.handler = Alexa.SkillBuilders.custom()
     LaunchRequestHandler,
 
     // Mi cartera digital handlers
+    GetExpenseCategoriesIntentHandler,
+    CreateExpenseCategoryIntentHandler,
+    DeleteExpenseCategoryIntentHandler,
     SetSalaryIntentHandler,
 
     HelpIntentHandler,

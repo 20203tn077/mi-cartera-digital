@@ -1,5 +1,36 @@
 {
   "interactionModel": {
+    "dialog": {
+      "intents": [
+        {
+          "slots": [
+            {
+              "name": "salary",
+              "elicitationRequired": true,
+              "validations": [
+                {
+                  "type": "isGreaterThan",
+                  "prompt": "Slot.Validation.1095670926340.396904269552.599466890084",
+                  "value": "0"
+                }
+              ],
+              "type": "AMAZON.NUMBER",
+              "confirmationRequired": true,
+              "prompts": {
+                "elicitation": "Elicit.Slot.1095670926340.396904269552",
+                "confirmation": "Confirm.Slot.1095670926340.396904269552"
+              }
+            }
+          ],
+          "name": "SetSalaryIntent",
+          "confirmationRequired": true,
+          "prompts": {
+            "confirmation": "Confirm.Intent.1095670926340"
+          }
+        }
+      ],
+      "delegationStrategy": "ALWAYS"
+    },
     "languageModel": {
       "intents": [
         {
@@ -28,10 +59,123 @@
         {
           "name": "AMAZON.NavigateHomeIntent",
           "samples": []
+        },
+        {
+          "slots": [],
+          "name": "GetExpenseCategoriesIntent",
+          "samples": []
+        },
+        {
+          "slots": [],
+          "name": "CreateExpenseCategoryIntent",
+          "samples": []
+        },
+        {
+          "slots": [],
+          "name": "DeleteExpenseCategoryIntent",
+          "samples": []
+        },
+        {
+          "slots": [
+            {
+              "name": "salary",
+              "type": "AMAZON.NUMBER",
+              "samples": [
+                "{salary} pesos a la quincena",
+                "Mi quincena es de {salary} pesos",
+                "Es de {salary} pesos",
+                "{salary} pesos"
+              ]
+            }
+          ],
+          "name": "SetSalaryIntent",
+          "samples": [
+            "Configurar quincena",
+            "Configurar mi quincena",
+            "Configurar la quincena",
+            "Configura mi quincena",
+            "Configura la quincena",
+            "Configurar quincena en {salary} pesos",
+            "Configurar mi quincena en {salary} pesos",
+            "Configurar la quincena en {salary} pesos",
+            "Configura mi quincena en {salary} pesos",
+            "Configura la quincena en {salary} pesos",
+            "Configurar quincena con un monto de {salary} pesos",
+            "Configurar mi quincena con un monto de {salary} pesos",
+            "Configurar la quincena con un monto de {salary} pesos",
+            "Configura mi quincena con un monto de {salary} pesos",
+            "Configura la quincena con un monto de {salary} pesos"
+          ]
         }
       ],
       "types": [],
-      "invocationName": "change me"
-    }
+      "invocationName": "mi cartera digital"
+    },
+    "prompts": [
+      {
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "Se configurará la quincena con en {salary} pesos ¿Estás de acuerdo?"
+          },
+          {
+            "type": "PlainText",
+            "value": "Se configurará la quincena con en {salary} pesos ¿Es correcto?"
+          },
+          {
+            "type": "PlainText",
+            "value": "Se configurará la quincena con un monto de {salary} pesos ¿Estás de acuerdo?"
+          },
+          {
+            "type": "PlainText",
+            "value": "Se configurará la quincena con un monto de {salary} pesos ¿Es correcto?"
+          }
+        ],
+        "id": "Confirm.Intent.1095670926340"
+      },
+      {
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "¿Cuál es el monto de tu quincena?"
+          },
+          {
+            "type": "PlainText",
+            "value": "¿De cuánto es tu quincena?"
+          },
+          {
+            "type": "PlainText",
+            "value": "¿De cuánto es el monto del quincena?"
+          }
+        ],
+        "id": "Elicit.Slot.1095670926340.396904269552"
+      },
+      {
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "¿Ganas {salary} a la quincena?"
+          },
+          {
+            "type": "PlainText",
+            "value": "¿La quincena son {salary} pesos?"
+          }
+        ],
+        "id": "Confirm.Slot.1095670926340.396904269552"
+      },
+      {
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "La quincena debe tener un valor positivo, di un monto válido"
+          },
+          {
+            "type": "PlainText",
+            "value": "El monto debe ser positivo, vuelve a intentarlo"
+          }
+        ],
+        "id": "Slot.Validation.1095670926340.396904269552.599466890084"
+      }
+    ]
   }
 }

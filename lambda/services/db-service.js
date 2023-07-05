@@ -8,24 +8,51 @@ class DbService {
   }
 
   async getAttributes() {
-    return (this._attributes =
-      (await this._manager.getPersistentAttributes()) || {
-        expenseCategories: [
-          'Transporte',
-          'Comida',
-          'Salud',
-          'Casa',
-          'Regalos',
-          'Otros',
-        ],
-        incomeCategories: [
-          'Sueldo'
-        ],
-        wallets: [
-          'Efectivo'
-        ],
-        salary: 0,
-      })
+    console.log(7)
+    this._attributes = (await this._manager.getPersistentAttributes()) || {
+      expenseCategories: [
+        {
+          name: 'Transporte',
+          deleted: false,
+        },
+        {
+          name: 'Comida',
+          deleted: false,
+        },
+        {
+          name: 'Salud',
+          deleted: false,
+        },
+        {
+          name: 'Casa',
+          deleted: false,
+        },
+        {
+          name: 'Regalos',
+          deleted: false,
+        },
+        {
+          name: 'Otros',
+          deleted: false,
+        },
+      ],
+      incomeCategories: [
+        {
+          name: 'Sueldo',
+          deleted: false,
+        },
+      ],
+      wallets: [
+        {
+          name: 'Efectivo',
+          balance: 0,
+          deleted: false,
+        },
+      ],
+      salary: 0,
+    }
+    console.log(8)
+    return this._attributes
   }
 
   async save() {
